@@ -3,11 +3,16 @@
 namespace Drupal\at\Tests;
 
 use Drupal\at_base\Tests\DrupalCacheAPI;
+use DrupalWebTestCase;
+use ReflectionObject;
 
-class TestCases extends \DrupalWebTestCase
+class TestCases extends DrupalWebTestCase
 {
 
     protected $profile = 'testing';
+
+    use \Drupal\at\Tests\CacheTestCaseTrait,
+        \Drupal\at\Tests\ContainerTestCaseTrait;
 
     public static function getInfo()
     {
@@ -24,12 +29,15 @@ class TestCases extends \DrupalWebTestCase
         at()->setDrupalCacheAPI(new DrupalCacheAPI());
     }
 
-    public function testAll()
+    public function testWrapper()
     {
-        $rclass = new \ReflectionObject($this);
+        $rclass = new ReflectionObject($this);
         foreach ($rclass->getMethods() as $method) {
-            if (0 === strpos($method->getName(), 'check') && 'AtModuleTestCases' === $method->class) {
-                $this->{$method->getName()}();
+            if (0 === strpos($method->getName(), 'check')) {
+                if ('Drupal\at\Tests\TestCases' === $method->class) {
+                    $this->assertTrue(TRUE, $method->getName(), 'Debug');
+                    $this->{$method->getName()}();
+                }
             }
         }
     }
