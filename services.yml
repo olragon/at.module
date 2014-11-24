@@ -1,0 +1,3 @@
+services:
+    expression_language:
+        class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'

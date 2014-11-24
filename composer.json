@@ -1,0 +1,23 @@
+{
+    "name": "drupal/at",
+    "type": "drupal-module",
+    "description": "Provide some more API for developer to work with Drupal",
+    "keywords": ["Drupal", "drush", "dependency injection", "container", "config", "api"],
+    "homepage": "http://v3k.net/",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "Andy Truong"
+            , "email": "thehongtt@gmail.com"
+            , "role": "Lead Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "twig/twig": "~1.16.0",
+        "symfony/dependency-injection": "~2.5.0",
+        "symfony/config": "~2.5.0",
+        "symfony/yaml": "~2.5.0",
+        "symfony/expression-language": "~2.5.0"
+    }
+}

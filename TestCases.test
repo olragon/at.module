@@ -1,0 +1,12 @@
+<?php
+
+foreach (glob(__DIR__ . '/src/Tests/*.php') as $file) {
+    require_once $file;
+}
+
+class AtModuleTestCases extends \Drupal\at\Tests\TestCases
+{
+
+    use \Drupal\at\Tests\CacheTestCaseTrait;
+
+}

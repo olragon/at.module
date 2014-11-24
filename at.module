@@ -1,0 +1,19 @@
+<?php
+
+define('AT_CLASS', 'Drupal\at\AT');
+
+require_once __DIR__ . '/includes/at.api.php';
+require_once __DIR__ . '/includes/at.hooks.php';
+
+/**
+ * Wrapper to helper classes.
+ *
+ * @return \Drupal\at\AT
+ */
+function at($class_name = 'Drupal\at\AT')
+{
+    if (!$obj = &drupal_static(__FUNCTION__)) {
+        $obj = new $class_name;
+    }
+    return $obj;
+}
