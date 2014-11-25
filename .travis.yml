@@ -1,0 +1,74 @@
+language: php
+php:
+  - 5.4
+  - 5.5
+
+mysql:
+  database: drupal
+  username: root
+  encoding: utf8
+
+install:
+  # ---------------------
+  # Setup DB
+  # ---------------------
+  - mysql -e 'SET GLOBAL wait_timeout = 5400;'
+  - mysql -e 'create database drupal;'
+
+  # ---------------------
+  # Install Drush
+  # ---------------------
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer global require drush/drush:6.*
+
+before_script:
+  # ---------------------
+  # Variables
+  # ---------------------
+  - cd ..
+  - export VENDOR=`pwd`
+  - cd ..
+  - export DRUPAL=`pwd`'/drupal-7.x/'
+
+  # ---------------------
+  # Download the codebase
+  # ---------------------
+  - wget https://github.com/drupal/drupal/archive/7.x.zip -O drupal.zip
+  - unzip -qq drupal.zip
+  - cd $DRUPAL
+  - drush si testing --db-url=mysql://root:@localhost/drupal --yes
+  - mv $VENDOR/* sites/all/modules/
+
+  # ---------------------
+  # Prepare env for the module
+  # ---------------------
+  - drush vset --yes file_temporary_path /tmp
+  - drush dl composer-7.x-1.x-dev composer_manager xautoload
+  - drush en -y composer_manager xautoload
+  
+  # Hack composer autoloading in composer (drush) module
+  - rm $HOME/.drush/composer/vendor/autoload.php
+  - rm $HOME/.drush/composer/vendor/composer/autoload_real.php
+  - wget https://gist.githubusercontent.com/andytruong/17c61540be24ac0a7ed0/raw/autoload.php -O $HOME/.drush/composer/vendor/autoload.php
+  - wget https://gist.githubusercontent.com/andytruong/17c61540be24ac0a7ed0/raw/autoload_real.php -O $HOME/.drush/composer/vendor/composer/autoload_real.php
+  
+  # Enable modules for testing
+  - drush vset composer_manager_autobuild_packages 0
+  - drush en -y simpletest at
+  - drush vset -y simpletest_verbose FALSE
+  - drush composer-rebuild
+  - cd $DRUPAL/sites/default/files/composer/
+  - composer update --no-dev
+
+  # ---------------------
+  # No cache data!
+  # ---------------------
+  - drush cc all
+
+script:
+  - drush test-run --dirty --field-labels=0 'AtModuleTestCases'
+
+notifications:
+  email: false
+  hipchat: 76d833fa0b6bae8860f279a0e7dba0@me.Andy
+  flowdock: 8e80a6538fa73fda0f7dd60bf2d44356
