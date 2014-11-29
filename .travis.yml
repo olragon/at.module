@@ -3,6 +3,10 @@ php:
   - 5.4
   - 5.5
 
+branches:
+  only:
+    - 7.x-1.x
+
 mysql:
   database: drupal
   username: root
