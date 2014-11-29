@@ -1,6 +1,6 @@
 <?php
 
-foreach (glob(__DIR__ . '/src/Tests/*.php') as $file) {
+foreach (glob(__DIR__ . '/../src/Tests/*.php') as $file) {
     require_once $file;
 }
 

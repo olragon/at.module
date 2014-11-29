@@ -9,4 +9,4 @@ php = 5.4.0
 dependencies[] = composer_manager
 dependencies[] = xautoload
 
-files[] = TestCases.test
+files[] = includes/TestCases.test
