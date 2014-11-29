@@ -15,7 +15,7 @@ class CoreExtension extends Extension
         foreach (['at' => 'at'] + at_modules('at', 'services') as $module) {
             $locator = new FileLocator(DRUPAL_ROOT);
             $loader = new YamlFileLoader($container, $locator);
-            $loader->load(drupal_get_path('module', $module) . '/services.yml');
+            $loader->load(drupal_get_path('module', $module) . '/' . $module . '.services.yml');
         }
     }
 
