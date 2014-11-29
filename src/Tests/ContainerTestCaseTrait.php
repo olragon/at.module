@@ -5,7 +5,7 @@ namespace Drupal\at\Tests;
 trait ContainerTestCaseTrait
 {
 
-    public function checkContainerClassName()
+    public function checkServiceContainer()
     {
         /* @var $testCase \DrupalWebTestCase */
         $testCase = $this;

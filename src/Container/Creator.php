@@ -2,7 +2,6 @@
 
 namespace Drupal\at\Container;
 
-use Drupal\at\Container\CoreExtension;
 use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
@@ -52,7 +51,9 @@ class Creator
     protected function getExtensions()
     {
         $extensions = [];
-        $extensions['at_base'] = new CoreExtension();
+        foreach (module_invoke_all('at_container_extension_info') as $name => $info) {
+            $extensions[$name] = at_newv($info['class'], isset($info['arguments']) ? $info['arguments'] : []);
+        }
         return $extensions;
     }
 
