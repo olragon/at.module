@@ -1,3 +1,8 @@
 services:
     expression_language:
         class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
+    'yaml.parser':
+        class: 'Symfony\Component\Yaml\Parser'
+        arguments: [0]
+    'yaml.dumper':
+        class: 'Symfony\Component\Yaml\Dumper'
