@@ -4,6 +4,7 @@ namespace Drupal\at;
 
 use Drupal\at\Container\Creator;
 use Drupal\at\Drupal\DrupalCacheAPI;
+use Drupal\at\Hooks\Implementations;
 use Drupal\at\ModuleFetcher;
 
 class AT
@@ -11,6 +12,9 @@ class AT
 
     protected $containerNamespace = '';
     protected $containerClass = 'AT_Container';
+
+    /** @var Implementations */
+    private $hookImplementations;
 
     /** @var DrupalCacheAPI */
     private $drupalCacheAPI;
@@ -58,6 +62,20 @@ class AT
     public function setDrupalCacheAPI($api)
     {
         $this->drupalCacheAPI = $api;
+    }
+
+    public function getHookImplementations()
+    {
+        if (NULL === $this->hookImplementations) {
+            $this->hookImplementations = new Implementations();
+        }
+        return $this->hookImplementations;
+    }
+
+    public function setHookImplementations($hookImplementations)
+    {
+        $this->hookImplementations = $hookImplementations;
+        return $this;
     }
 
 }
