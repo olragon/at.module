@@ -2,6 +2,7 @@
 
 namespace Drupal\at;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal\at\Container\Creator;
 use Drupal\at\Drupal\DrupalCacheAPI;
 use Drupal\at\Hooks\Implementations;
@@ -89,6 +90,23 @@ class AT
     public function getJsonSchemaValidator()
     {
         return $this->getContainer()->get('json_schema.validator');
+    }
+
+    /**
+     * Get key-value storage entity manager.
+     * @param string $name
+     * @return \Doctrine\KeyValueStore\EntityManager
+     */
+    public function getKeyValueStorageEntityManager($name = 'default')
+    {
+        static $ran = FALSE;
+        if (!$ran && ($ran = TRUE)) {
+            $base_dir = composer_manager_vendor_dir() . '/doctrine/key-value-store/';
+            AnnotationRegistry::registerFile($base_dir . '/lib/Doctrine/KeyValueStore/Mapping/Annotations/Entity.php');
+            AnnotationRegistry::registerFile($base_dir . '/lib/Doctrine/KeyValueStore/Mapping/Annotations/Id.php');
+            AnnotationRegistry::registerFile($base_dir . '/lib/Doctrine/KeyValueStore/Mapping/Annotations/Transient.php');
+        }
+        return at()->getContainer()->get('kvs.em.' . $name);
     }
 
 }
