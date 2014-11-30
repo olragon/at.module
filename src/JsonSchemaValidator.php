@@ -31,6 +31,24 @@ class JsonSchemaValidator extends Validator
         return parent::check($value, $schema, $path, $i);
     }
 
+    private function retreiveSchema($uri)
+    {
+        static $schemas = [];
+
+        if (!empty($schemas[$uri])) {
+            return $schemas[$uri];
+        }
+
+        if (FALSE === strpos($uri, '://')) {
+            $uri = "file://{$uri}";
+        }
+
+        $schema = $this->uriRetriever->retrieve($uri);
+        $this->refResolver->resolve($schema, dirname($uri));
+
+        return $schemas[$uri] = $schema;
+    }
+
     /**
      * Validate.
      *
@@ -40,17 +58,7 @@ class JsonSchemaValidator extends Validator
      */
     public function validate($value, $schemaUri)
     {
-        if (FALSE === strpos($schemaUri, '://')) {
-            $schemaUri = "file://{$schemaUri}";
-        }
-
-        if (is_array($value)) {
-            $value = (object) $value;
-        }
-
-        $schema = $this->uriRetriever->retrieve($schemaUri);
-        $this->refResolver->resolve($schema, dirname($schemaUri));
-        $this->check($value, $schema);
+        $this->check(is_array($value) ? (object) $value : $value, $this->retreiveSchema($schemaUri));
         return $this->isValid();
     }
 
