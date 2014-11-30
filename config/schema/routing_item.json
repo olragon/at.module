@@ -1,0 +1,23 @@
+{
+    "type": "object",
+    "properties": {
+        "path": {
+            "type": {
+                "type": "string"
+            }
+        },
+        "defaults": {
+            "_title": {
+                "type": "string"
+            },
+            "_controller": {
+                "type": "string"
+            }
+        },
+        "requirements": {
+            "_permission": {
+                "type": "string"
+            }
+        }
+    }
+}

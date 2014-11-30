@@ -13,3 +13,10 @@ function at_at_container_extension_info()
     ];
 }
 
+/**
+ * Implements core's hook_menu().
+ */
+function at_menu()
+{
+    return at()->getHookImplementations()->getHookMenu()->execute();
+}
