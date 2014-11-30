@@ -1,6 +1,17 @@
 services:
     expression_language:
         class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
+
+    # JSON schema validator
+    'json_schema.uri_retriever':
+        class: 'JsonSchema\Uri\UriRetriever'
+    'json_schema.ref_resolver':
+        class: 'JsonSchema\RefResolver'
+    'json_schema.validator':
+        class: 'Drupal\at\JsonSchemaValidator'
+        arguments: ['@json_schema.uri_retriever', '@json_schema.ref_resolver']
+
+    # Yaml parser & dumper
     'yaml.parser':
         class: 'Symfony\Component\Yaml\Parser'
         arguments: [0]
