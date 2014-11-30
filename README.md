@@ -12,24 +12,22 @@ To use this module for your module, edit MODULE.info file, add this line:
 dependencies[] = at
 ```
 
-### 1. Service container
+## Install
 
-1.1 Define services
+You must be familiar to Drush and composer.
 
-The module provide a bridge to integrate Symfony Dependency Injection component.
-We can define ./services.yml file in module's root directory.
-
-```yaml
-# file: MODULE.services.yml
-services:
-    expression_language:
-        class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
+```bash
+drush dl composer-7.x-1.x-dev composer_manager xautoload
+drush vset composer_manager_autobuild_packages 0
+drush en -y composer_manager xautoload at
+drush composer-rebuild
+cd sites/default/files/composer/
+composer update --no-dev
 ```
 
-> Tip: To provide your own extension, check `hook_at_container_extension_info()`
+## Features
 
-1.2 Get services
-
-```php
-$service = at()->getContainer()->get($id);
-```
+1. Service container
+2. Yaml parser & dumper
+3. Bridge for Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)
+4. JSON Schema validator
