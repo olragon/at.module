@@ -78,4 +78,12 @@ class AT
         return $this;
     }
 
+    /**
+     * @return \Drupal\at\JsonSchemaValidator
+     */
+    public function getJsonSchemaValidator()
+    {
+        return $this->getContainer()->get('json_schema.validator');
+    }
+
 }

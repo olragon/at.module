@@ -1,0 +1,16 @@
+{
+    "type": "object",
+    "properties": {
+        "tupleTyping": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "number"
+                }
+            ]
+        }
+    }
+}
