@@ -40,6 +40,11 @@ class AT
                 require_once $fileName;
                 return $container = new $this->containerClass;
             }
+
+            // Make sure composer's autoloader is registered
+            require_once drupal_get_path('module', 'composer_manager') . '/composer_manager.module';
+            composer_manager_register_autoloader();
+
             $creator = new Creator($fileName, $this->containerNamespace, $this->containerClass);
             $container = $creator->create();
         }
