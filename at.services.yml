@@ -2,6 +2,10 @@ services:
     expression_language:
         class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
 
+    # Own services
+    'at.drupal.db':
+        class: 'Drupal\at\Drupal\DrupalDatabaseAPI'
+
     # JSON schema validator
     'json_schema.uri_retriever':
         class: 'JsonSchema\Uri\UriRetriever'
