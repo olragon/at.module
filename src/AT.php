@@ -52,6 +52,16 @@ class AT
         return $container;
     }
 
+    /**
+     * Get service by ID.
+     * @param string $id
+     * @return mixed
+     */
+    public function get($id)
+    {
+        return $this->getContainer()->get($id);
+    }
+
     public function getDrupalCacheAPI()
     {
         if (NULL === $this->drupalCacheAPI) {
