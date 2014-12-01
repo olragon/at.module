@@ -6,12 +6,6 @@ AT [![Build Status](https://travis-ci.org/v3kwip/at.module.svg?branch=7.x-1.x)](
 This module provides API for other Drupal modules, there's no features for end
 users.
 
-To use this module for your module, edit MODULE.info file, add this line:
-
-```ini
-dependencies[] = at
-```
-
 ## Install
 
 You must be familiar to Drush and composer.
@@ -23,6 +17,14 @@ drush en -y composer_manager xautoload at
 drush composer-rebuild
 cd sites/default/files/composer/
 composer update --no-dev
+```
+
+## Using
+
+To use this module for your module, edit MODULE.info file, add this line:
+
+```ini
+dependencies[] = at
 ```
 
 ## Features
