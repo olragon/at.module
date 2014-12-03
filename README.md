@@ -1,4 +1,4 @@
-AT [![Build Status](https://travis-ci.org/v3kwip/at.module.svg?branch=7.x-1.x)](https://travis-ci.org/v3kwip/at.module)
+@module [![Build Status](https://travis-ci.org/v3kwip/at.module.svg?branch=7.x-1.x)](https://travis-ci.org/v3kwip/at.module)
 =======
 
 > Your attention please:  Do not use this module until it's under beta phase.
@@ -6,30 +6,30 @@ AT [![Build Status](https://travis-ci.org/v3kwip/at.module.svg?branch=7.x-1.x)](
 This module provides API for other Drupal modules, there's no features for end
 users.
 
+## Install
+
+You must be familiar to Drush and composer.
+
+```bash
+drush dl composer-7.x-1.x-dev composer_manager xautoload
+drush vset composer_manager_autobuild_packages 0
+drush en -y composer_manager xautoload at
+drush composer-rebuild
+cd sites/default/files/composer/
+composer update --no-dev
+```
+
+## Using
+
 To use this module for your module, edit MODULE.info file, add this line:
 
 ```ini
 dependencies[] = at
 ```
 
-### 1. Service container
+## Features
 
-1.1 Define services
-
-The module provide a bridge to integrate Symfony Dependency Injection component.
-We can define ./services.yml file in module's root directory.
-
-```yaml
-# file: MODULE.services.yml
-services:
-    expression_language:
-        class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
-```
-
-> Tip: To provide your own extension, check `hook_at_container_extension_info()`
-
-1.2 Get services
-
-```php
-$service = at()->getContainer()->get($id);
-```
+1. Service container
+2. Yaml parser & dumper
+3. Bridge for Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)
+4. JSON Schema validator

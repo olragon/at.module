@@ -13,7 +13,8 @@ class TestCases extends DrupalWebTestCase
 
     use \Drupal\at\Tests\CacheTestCaseTrait,
         \Drupal\at\Tests\ContainerTestCaseTrait,
-        \Drupal\at\Tests\JsonSchemaTestCaseTrait;
+        \Drupal\at\Tests\JsonSchemaTestCaseTrait,
+        \Drupal\at\Tests\KeyValueStorageTestCaseTrait;
 
     public static function getInfo()
     {
@@ -36,7 +37,7 @@ class TestCases extends DrupalWebTestCase
         foreach ($rclass->getMethods() as $method) {
             if (0 === strpos($method->getName(), 'check')) {
                 if ('Drupal\at\Tests\TestCases' === $method->class) {
-                    $this->assertTrue(TRUE, $method->getName(), 'Debug');
+                    $this->assertTrue(TRUE, '[Checking] ' . $method->getName() . '…', 'Debug');
                     $this->{$method->getName()}();
                 }
             }

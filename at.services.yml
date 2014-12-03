@@ -2,6 +2,10 @@ services:
     expression_language:
         class: 'Symfony\Component\ExpressionLanguage\ExpressionLanguage'
 
+    # Own services
+    'at.drupal.db':
+        class: 'Drupal\at\Drupal\DrupalDatabaseAPI'
+
     # JSON schema validator
     'json_schema.uri_retriever':
         class: 'JsonSchema\Uri\UriRetriever'
@@ -17,3 +21,29 @@ services:
         arguments: [0]
     'yaml.dumper':
         class: 'Symfony\Component\Yaml\Dumper'
+
+    # Key-Value services
+    'kvs.cache.array':
+        class: 'Doctrine\Common\Cache\ArrayCache'
+    'kvs.storage.array':
+        class: 'Doctrine\KeyValueStore\Storage\DoctrineCacheStorage'
+        arguments: ['@kvs.cache.array']
+    'kvs.storage.dbal':
+        class: 'Drupal\at\KeyValueStorage'
+        arguments: ['@at.drupal.db']
+    'kvs.annotation.reader.default':
+        class: 'Doctrine\Common\Annotations\AnnotationReader'
+    'kvs.annotation.driver.default':
+        class: 'Doctrine\KeyValueStore\Mapping\AnnotationDriver'
+        arguments: ['@kvs.annotation.reader.default']
+    'kvs.config.default':
+        class: 'Doctrine\KeyValueStore\Configuration'
+        calls:
+            - ['setMappingDriverImpl', ['@kvs.annotation.driver.default']]
+            - ['setMetadataCache', ['@kvs.cache.array']]
+    'kvs.em.array':
+        class: 'Doctrine\KeyValueStore\EntityManager'
+        arguments: ['@kvs.storage.array', '@kvs.config.default']
+    'kvs.em.default':
+        class: 'Doctrine\KeyValueStore\EntityManager'
+        arguments: ['@kvs.storage.dbal', '@kvs.config.default']

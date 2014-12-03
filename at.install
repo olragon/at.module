@@ -17,5 +17,19 @@ function at_schema()
         'indexes'     => array('tag' => array('tag')),
     );
 
+    $schema['at_kv'] = array(
+        'description' => 'Key-value storage',
+        'fields'      => array(
+            'collection' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
+            'k'          => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
+            'v'          => array('type' => 'blob', 'size' => 'big', 'not null' => TRUE),
+        ),
+        'unique keys' => array('u_collection_key' => array('collection', 'k')),
+        'indexes'     => array(
+            'i_collection'     => array('collection'),
+            'i_collection_key' => array('collection', 'k')
+        ),
+    );
+
     return $schema;
 }
