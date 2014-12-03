@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\at\Tests;
+namespace Drupal\at\Tests\Traits;
 
 use Doctrine\KeyValueStore\Mapping\Annotations as KeyValue;
 
@@ -23,7 +23,7 @@ trait KeyValueStorageTestCaseTrait
         $em->flush();
 
         // Read
-        $created_item = $em->find('Drupal\at\Tests\RoutingItemFixture', ['name' => 'demo']);
+        $created_item = $em->find('Drupal\at\Tests\Traits\RoutingItemFixture', ['name' => 'demo']);
         $this->assertTrue($created_item instanceof RoutingItemFixture);
         $this->assertEqual('Demo route item', $created_item->getTitle());
     }

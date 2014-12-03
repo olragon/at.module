@@ -11,10 +11,10 @@ class TestCases extends DrupalWebTestCase
 
     protected $profile = 'testing';
 
-    use \Drupal\at\Tests\CacheTestCaseTrait,
-        \Drupal\at\Tests\ContainerTestCaseTrait,
-        \Drupal\at\Tests\JsonSchemaTestCaseTrait,
-        \Drupal\at\Tests\KeyValueStorageTestCaseTrait;
+    use \Drupal\at\Tests\Traits\CacheTestCaseTrait,
+        \Drupal\at\Tests\Traits\ContainerTestCaseTrait,
+        \Drupal\at\Tests\Traits\JsonSchemaTestCaseTrait,
+        \Drupal\at\Tests\Traits\KeyValueStorageTestCaseTrait;
 
     public static function getInfo()
     {
