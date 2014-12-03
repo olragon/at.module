@@ -8,7 +8,6 @@ require_once __DIR__ . '/includes/at.hooks.php';
 
 /**
  * Wrapper to helper classes.
- *
  * @return \Drupal\at\AT
  */
 function at($class_name = 'Drupal\at\AT')
@@ -17,4 +16,26 @@ function at($class_name = 'Drupal\at\AT')
         $obj = new $class_name;
     }
     return $obj;
+}
+
+/**
+ * Load route type by name.
+ * @param string $name
+ * @return \Drupal\at\Entity\RouteType
+ */
+function at_route_type_load($name)
+{
+    $types = entity_load_multiple_by_name('at_route_type', [$name]);
+    return isset($types[$name]) ? $types[$name] : null;
+}
+
+/**
+ * Load route by name.
+ * @param string $name
+ * @return \Drupal\at\Entity\Route
+ */
+function at_route_load($name)
+{
+    $routes = entity_load_multiple_by_name('at_route', [$name]);
+    return isset($routes[$name]) ? $routes[$name] : null;
 }

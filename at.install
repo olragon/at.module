@@ -6,12 +6,14 @@
 function at_install()
 {
     // Create default route type
-    entity_create('at_route_type', [
-        'type'   => 'route',
-        'label'  => 'Default',
-        'module' => 'at',
-        'status' => ENTITY_IN_CODE,
-    ])->save();
+    db_insert('at_route_type')
+        ->fields([
+            'type'   => 'route',
+            'label'  => 'Default',
+            'module' => 'at',
+            'status' => ENTITY_IN_CODE
+        ])
+        ->execute();
 }
 
 /**
@@ -46,8 +48,8 @@ function at_schema()
     ];
 
     $schema['at_route_type'] = [
-        'description'  => 'Route types',
-        'fields'       => [
+        'description' => 'Route types',
+        'fields'      => [
             'id'     => ['type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique routing type ID.'],
             'type'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this routing type.'],
             'label'  => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this routing type.'],
@@ -56,17 +58,16 @@ function at_schema()
             'status' => ['type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the entity.'],
             'module' => ['type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'],
         ],
-        'primary keys' => ['id'],
-        'indexes'      => [
+        'primary key' => ['id'],
+        'indexes'     => [
             'i_type'   => ['type'],
             'i_weight' => ['weight'],
-            'i_status' => ['status'],
         ],
     ];
 
     $schema['at_route'] = [
-        'description'  => 'Route items',
-        'fields'       => [
+        'description' => 'Route items',
+        'fields'      => [
             'id'     => ['type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique routing item ID.'],
             'type'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'Routing type'],
             'name'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this routing item.'],
@@ -75,11 +76,10 @@ function at_schema()
             'status' => ['type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the routing item.'],
             'module' => ['type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'],
         ],
-        'primary keys' => ['id'],
-        'indexes'      => [
+        'primary key' => ['id'],
+        'indexes'     => [
             'i_bundle' => ['type'],
             'i_name'   => ['name'],
-            'i_weight' => ['weight'],
             'i_status' => ['status'],
         ],
     ];

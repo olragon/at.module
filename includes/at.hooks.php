@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Implementshook_permission().
+ */
+function at_permission()
+{
+    return [
+        'administer route types' => [
+            'title'       => 'Administer route types',
+            'description' => 'Configure route type entities',
+        ],
+    ];
+}
+
+/**
  * Implements at.module's hook_at_container_extension_info()
  */
 function at_at_container_extension_info()
@@ -64,7 +77,21 @@ function at_entity_info()
             'file'             => 'includes/at.pages.php',
             'controller class' => 'Drupal\at\Entity\RouteUIController',
         ],
+        'bundles'          => [],
     ];
+
+    // Add bundle info but bypass entity_load() as we cannot use it here.
+    foreach (db_select('at_route_type', 'route_type')->fields('route_type')->execute()->fetchAllAssoc('type') as $name => $route_type) {
+        $info['at_route']['bundles'][$name] = array(
+            'label' => $route_type->label,
+            'admin' => array(
+                'path'             => 'admin/structure/route-types/manage/%at_route_type',
+                'real path'        => 'admin/structure/route-types/manage/' . $name,
+                'bundle argument'  => 4,
+                'access arguments' => array('administer route types'),
+            ),
+        );
+    }
 
     return $info;
 }
