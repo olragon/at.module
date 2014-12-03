@@ -11,7 +11,9 @@ class Implementations
     public function getHookMenu()
     {
         if (NULL === $this->hookMenu) {
-            $this->hookMenu = new HookMenu(at()->getContainer()->get('yaml.parser'));
+            $parser = at()->get('yaml.parser');
+            $validator = at()->get('json_schema.validator');
+            $this->hookMenu = new HookMenu($parser, $validator);
         }
         return $this->hookMenu;
     }

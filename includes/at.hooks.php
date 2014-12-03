@@ -70,6 +70,7 @@ function at_entity_info()
         'fieldable'        => TRUE,
         'exportable'       => TRUE,
         'entity keys'      => array('id' => 'id', 'name' => 'name', 'label' => 'title'),
+        'bundle keys'      => array('bundle' => 'type'),
         'access callback'  => 'at_route_access_callback',
         'module'           => 'at',
         'admin ui'         => [

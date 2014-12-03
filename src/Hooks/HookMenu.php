@@ -2,19 +2,21 @@
 
 namespace Drupal\at\Hooks;
 
+use Drupal\at\JsonSchemaValidator;
+
 class HookMenu
 {
 
     /** @var \Symfony\Component\Yaml\Parser */
     private $yamlParser;
 
-    /** @var \Drupal\at\JsonSchemaValidator */
+    /** @var JsonSchemaValidator */
     private $valiator;
 
     /** @var string */
     private $schemaUri;
 
-    public function __construct($parser, \Drupal\at\JsonSchemaValidator $validator)
+    public function __construct($parser, JsonSchemaValidator $validator)
     {
         $this->yamlParser = $parser;
         $this->valiator = $validator;
