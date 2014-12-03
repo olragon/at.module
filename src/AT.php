@@ -5,6 +5,7 @@ namespace Drupal\at;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Drupal\at\Container\Creator;
 use Drupal\at\Drupal\DrupalCacheAPI;
+use Drupal\at\Drupal\DrupalModuleAPI;
 use Drupal\at\Hooks\Implementations;
 use Drupal\at\ModuleFetcher;
 
@@ -19,6 +20,9 @@ class AT
 
     /** @var DrupalCacheAPI */
     private $drupalCacheAPI;
+
+    /** @var DrupalModuleAPI */
+    private $moduleAPI;
 
     /**
      * @param string $baseModule
@@ -80,6 +84,20 @@ class AT
         $this->drupalCacheAPI = $api;
     }
 
+    public function getModuleAPI()
+    {
+        if (NULL === $this->moduleAPI) {
+            $this->moduleAPI = new DrupalModuleAPI();
+        }
+        return $this->moduleAPI;
+    }
+
+    public function setModuleAPI(DrupalModuleAPI $moduleAPI)
+    {
+        $this->moduleAPI = $moduleAPI;
+        return $this;
+    }
+
     public function getHookImplementations()
     {
         if (NULL === $this->hookImplementations) {
@@ -95,7 +113,7 @@ class AT
     }
 
     /**
-     * @return \Drupal\at\JsonSchemaValidator
+     * @return JsonSchemaValidator
      */
     public function getJsonSchemaValidator()
     {
