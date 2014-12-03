@@ -69,7 +69,7 @@ function at_schema()
         'description' => 'Route items',
         'fields'      => [
             'id'     => ['type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique routing item ID.'],
-            'type'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'Routing type'],
+            'bundle' => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'Routing type'],
             'name'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this routing item.'],
             'title'  => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this routing item.'],
             'data'   => ['type' => 'text', 'not null' => FALSE, 'size' => 'big', 'serialize' => TRUE, 'description' => 'A serialized array of additional data related to this routing item.'],
@@ -78,7 +78,7 @@ function at_schema()
         ],
         'primary key' => ['id'],
         'indexes'     => [
-            'i_bundle' => ['type'],
+            'i_bundle' => ['bundle'],
             'i_name'   => ['name'],
             'i_status' => ['status'],
         ],

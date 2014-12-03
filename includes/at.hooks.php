@@ -69,8 +69,8 @@ function at_entity_info()
         'base table'       => 'at_route',
         'fieldable'        => TRUE,
         'exportable'       => TRUE,
-        'entity keys'      => array('id' => 'id', 'name' => 'name', 'label' => 'title'),
-        'bundle keys'      => array('bundle' => 'type'),
+        'entity keys'      => array('id' => 'id', 'bundle' => 'bundle', 'name' => 'name', 'label' => 'title'),
+        'bundle keys'      => array('bundle' => 'bundle'),
         'access callback'  => 'at_route_access_callback',
         'module'           => 'at',
         'admin ui'         => [

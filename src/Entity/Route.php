@@ -11,7 +11,7 @@ class Route extends Entity
     public $id;
 
     /** @var string */
-    public $type;
+    public $bundle;
 
     /** @var string */
     public $name;
