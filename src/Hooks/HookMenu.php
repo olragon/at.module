@@ -52,19 +52,28 @@ class HookMenu
         return $items;
     }
 
-    private function convertRoutingItemToDrupal7Style($module, $name, $route)
+    private function convertRoutingItemToDrupal7Style($module, $name, array $input)
     {
-        return [
-            'title'            => '…',
-            # 'title callback'   => 't',
-            # 'title arguments'  => array(1),
-            'access callback'  => '',
-            'access arguments' => [],
-            'page callback'    => '',
-            'page arguments'   => [],
-            'file path'        => drupal_get_path('module', $module),
-            'file'             => '…',
+        $menu_item = [
+            'title'            => isset($input['defaults']['_title']) ? $input['defaults']['_title'] : '',
+            'type'             => isset($input['defaults']['_type']) ? $input['defaults']['_type'] : MENU_NORMAL_ITEM,
+            'access callback'  => 'at_page_access_callback',
+            'access arguments' => [$name],
+            'page callback'    => 'at_page_callback',
+            'page arguments'   => [$name],
+            'file'             => 'includes/at.pages.php',
         ];
+
+        if ($route = entity_load('at_route', FALSE, ['name' => $name])) {
+            $route = entity_create('at_route', [
+                'type' => isset($input['bundle']) ? $input['bundle'] : 'route',
+                'name' => $name,
+            ]);
+        }
+
+        $route->data = ['module' => $module] + $input;
+
+        return $menu_item;
     }
 
 }
