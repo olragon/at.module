@@ -1,12 +1,19 @@
 <?php
 
-namespace Drupal\at\Tests;
+use Drupal\at_base\Tests\DrupalAPI\DrupalCacheAPI;
+use Drupal\at_base\Tests\DrupalAPI\DrupalModuleAPI;
 
-use Drupal\at_base\Tests\DrupalCacheAPI;
-use DrupalWebTestCase;
-use ReflectionObject;
+$files = array_merge(
+    glob(AT_ROOT . '/src/Tests/DrupalAPI/*.php'),
+    glob(AT_ROOT . '/src/Tests/Fixtures/*.php'),
+    glob(AT_ROOT . '/src/Tests/Traits/*.php')
+);
 
-class TestCases extends DrupalWebTestCase
+foreach ($files as $file) {
+    require_once $file;
+}
+
+class AtModuleTestCases  extends DrupalWebTestCase
 {
 
     protected $profile = 'testing';
@@ -14,7 +21,8 @@ class TestCases extends DrupalWebTestCase
     use \Drupal\at\Tests\Traits\CacheTestCaseTrait,
         \Drupal\at\Tests\Traits\ContainerTestCaseTrait,
         \Drupal\at\Tests\Traits\JsonSchemaTestCaseTrait,
-        \Drupal\at\Tests\Traits\KeyValueStorageTestCaseTrait;
+        \Drupal\at\Tests\Traits\KeyValueStorageTestCaseTrait,
+        \Drupal\at\Tests\Traits\RoutingTestCaseTrait;
 
     public static function getInfo()
     {
@@ -29,6 +37,7 @@ class TestCases extends DrupalWebTestCase
     {
         parent::setUp('at');
         at()->setDrupalCacheAPI(new DrupalCacheAPI());
+        at()->setModuleAPI(new DrupalModuleAPI());
     }
 
     public function testWrapper()
@@ -36,12 +45,11 @@ class TestCases extends DrupalWebTestCase
         $rclass = new ReflectionObject($this);
         foreach ($rclass->getMethods() as $method) {
             if (0 === strpos($method->getName(), 'check')) {
-                if ('Drupal\at\Tests\TestCases' === $method->class) {
+                if ('AtModuleTestCases' === $method->class) {
                     $this->assertTrue(TRUE, '[Checking] ' . $method->getName() . '…', 'Debug');
                     $this->{$method->getName()}();
                 }
             }
         }
     }
-
 }

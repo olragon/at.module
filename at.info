@@ -10,4 +10,4 @@ dependencies[] = composer_manager
 dependencies[] = entity
 dependencies[] = xautoload
 
-files[] = includes/TestCases.test
+files[] = src/Tests/TestCases.test

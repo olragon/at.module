@@ -44,9 +44,10 @@ class HookMenu
     private function getMenuItems($module, $routes)
     {
         $items = [];
-        foreach ($routes as $name => $route) {
-            if ($this->valiator->validate($route, $this->schemaUri)) {
-                $items[$name] = $this->convertRoutingItemToDrupal7Style($module, $name, $route);
+        foreach ($routes as $name => $input) {
+            if ($this->valiator->validate($input, $this->schemaUri)) {
+                $path = trim($input['path'], '/');
+                $items[$path] = $this->convertRoutingItemToDrupal7Style($module, $name, $input);
             }
         }
         return $items;

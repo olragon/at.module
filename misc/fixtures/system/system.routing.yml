@@ -1,0 +1,7 @@
+system.demo:
+    path: /system/demo
+    defaults:
+        _title: 'System demo'
+        _controller: 'Drupal\at\Tests\Fixtures\SystemDemoController::render'
+    requirements:
+        _permission: 'access content'

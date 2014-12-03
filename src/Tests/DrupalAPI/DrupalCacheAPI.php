@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\at_base\Tests;
+namespace Drupal\at_base\Tests\DrupalAPI;
 
 class DrupalCacheAPI
 {
