@@ -20,3 +20,51 @@ function at_menu()
 {
     return at()->getHookImplementations()->getHookMenu()->execute();
 }
+
+/**
+ * Implements hook_entity_info().
+ */
+function at_entity_info()
+{
+    $info = [];
+
+    $info['at_route_type'] = [
+        'label'            => 'Route type',
+        'plural label'     => 'Route types',
+        'description'      => 'Types of route items',
+        'entity class'     => 'Drupal\at\Entity\RouteType',
+        'controller class' => 'Drupal\at\Entity\RouteTypeController',
+        'base table'       => 'at_route_type',
+        'fieldable'        => FALSE,
+        'bundle of'        => 'at_route',
+        'exportable'       => TRUE,
+        'entity keys'      => array('id' => 'id', 'name' => 'type', 'label' => 'label'),
+        'access callback'  => 'at_route_type_access_callback',
+        'module'           => 'at',
+        'admin ui'         => [
+            'path'             => 'admin/structure/route-types',
+            'file'             => 'includes/at.pages.php',
+            'controller class' => 'Drupal\at\Entity\RouteTypeUIController',
+        ],
+    ];
+
+    $info['at_route'] = [
+        'label'            => 'Route item',
+        'description'      => 'Store structure of route items',
+        'entity class'     => 'Drupal\at\Entity\Route',
+        'controller class' => 'Drupal\at\Entity\RouteController',
+        'base table'       => 'at_route',
+        'fieldable'        => TRUE,
+        'exportable'       => TRUE,
+        'entity keys'      => array('id' => 'id', 'name' => 'name', 'label' => 'title'),
+        'access callback'  => 'at_route_access_callback',
+        'module'           => 'at',
+        'admin ui'         => [
+            'path'             => 'admin/structure/at-routes',
+            'file'             => 'includes/at.pages.php',
+            'controller class' => 'Drupal\at\Entity\RouteUIController',
+        ],
+    ];
+
+    return $info;
+}

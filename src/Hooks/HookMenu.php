@@ -12,18 +12,18 @@ class HookMenu
     private $valiator;
 
     /** @var string */
-    private $schemaUri = AT_ROOT . '/misc/schema/routing.json';
+    private $schemaUri;
 
     public function __construct($parser, \Drupal\at\JsonSchemaValidator $validator)
     {
         $this->yamlParser = $parser;
         $this->valiator = $validator;
+        $this->schemaUri = AT_ROOT . '/misc/schema/routing.json';
     }
 
     public function execute()
     {
-        $items = array();
-
+        $items = [];
         foreach (at_modules('at') as $module) {
             $file = DRUPAL_ROOT . '/' . drupal_get_path('module', $module) . '/' . $module . '.routing.yml';
             if (file_exists($file)) {
@@ -31,7 +31,6 @@ class HookMenu
                 $items += $this->getMenuItems($module, $routes);
             }
         }
-
         return $items;
     }
 

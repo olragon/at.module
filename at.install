@@ -1,35 +1,87 @@
 <?php
 
 /**
+ * Implements hook_install().
+ */
+function at_install()
+{
+    // Create default route type
+    entity_create('at_route_type', [
+        'type'   => 'route',
+        'label'  => 'Default',
+        'module' => 'at',
+        'status' => ENTITY_IN_CODE,
+    ])->save();
+}
+
+/**
  * Implements hook_schema().
  * @return string
  */
 function at_schema()
 {
-    $schema['at_base_cache_tag'] = array(
+    $schema['at_base_cache_tag'] = [
         'description' => 'Pairs of cacheID & tag',
-        'fields'      => array(
-            'bin' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
-            'cid' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
-            'tag' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
-        ),
-        'primary key' => array('bin', 'cid', 'tag'),
-        'indexes'     => array('tag' => array('tag')),
-    );
+        'fields'      => [
+            'bin' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+            'cid' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+            'tag' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+        ],
+        'primary key' => ['bin', 'cid', 'tag'],
+        'indexes'     => ['tag' => ['tag']],
+    ];
 
-    $schema['at_kv'] = array(
+    $schema['at_kv'] = [
         'description' => 'Key-value storage',
-        'fields'      => array(
-            'collection' => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
-            'k'          => array('type' => 'varchar', 'length' => 255, 'not null' => TRUE),
-            'v'          => array('type' => 'blob', 'size' => 'big', 'not null' => TRUE),
-        ),
-        'unique keys' => array('u_collection_key' => array('collection', 'k')),
-        'indexes'     => array(
-            'i_collection'     => array('collection'),
-            'i_collection_key' => array('collection', 'k')
-        ),
-    );
+        'fields'      => [
+            'collection' => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+            'k'          => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE],
+            'v'          => ['type' => 'blob', 'size' => 'big', 'not null' => TRUE],
+        ],
+        'unique keys' => ['u_collection_key' => ['collection', 'k']],
+        'indexes'     => [
+            'i_collection'     => ['collection'],
+            'i_collection_key' => ['collection', 'k']
+        ],
+    ];
+
+    $schema['at_route_type'] = [
+        'description'  => 'Route types',
+        'fields'       => [
+            'id'     => ['type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique routing type ID.'],
+            'type'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this routing type.'],
+            'label'  => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this routing type.'],
+            'weight' => ['type' => 'int', 'not null' => TRUE, 'default' => 0, 'size' => 'tiny', 'description' => 'The weight of this routing type in relation to others.'],
+            'data'   => ['type' => 'text', 'not null' => FALSE, 'size' => 'big', 'serialize' => TRUE, 'description' => 'A serialized array of additional data related to this routing type.'],
+            'status' => ['type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the entity.'],
+            'module' => ['type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'],
+        ],
+        'primary keys' => ['id'],
+        'indexes'      => [
+            'i_name'   => ['name'],
+            'i_weight' => ['weight'],
+            'i_status' => ['status'],
+        ],
+    ];
+
+    $schema['at_route'] = [
+        'description'  => 'Route items',
+        'fields'       => [
+            'id'     => ['type' => 'serial', 'not null' => TRUE, 'description' => 'Primary Key: Unique routing item ID.'],
+            'type'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'Routing type'],
+            'name'   => ['type' => 'varchar', 'length' => 32, 'not null' => TRUE, 'description' => 'The machine-readable name of this routing item.'],
+            'title'  => ['type' => 'varchar', 'length' => 255, 'not null' => TRUE, 'default' => '', 'description' => 'The human-readable name of this routing item.'],
+            'data'   => ['type' => 'text', 'not null' => FALSE, 'size' => 'big', 'serialize' => TRUE, 'description' => 'A serialized array of additional data related to this routing item.'],
+            'status' => ['type' => 'int', 'not null' => TRUE, 'default' => 0x01, 'size' => 'tiny', 'description' => 'The exportable status of the routing item.'],
+            'module' => ['type' => 'varchar', 'length' => 255, 'not null' => FALSE, 'description' => 'The name of the providing module if the entity has been defined in code.'],
+        ],
+        'primary keys' => ['id'],
+        'indexes'      => [
+            'i_name'   => ['name'],
+            'i_weight' => ['weight'],
+            'i_status' => ['status'],
+        ],
+    ];
 
     return $schema;
 }
