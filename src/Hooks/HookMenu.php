@@ -2,6 +2,7 @@
 
 namespace Drupal\at\Hooks;
 
+use Drupal\at\Drupal\DrupalModuleAPI;
 use Drupal\at\JsonSchemaValidator;
 
 class HookMenu
@@ -16,10 +17,14 @@ class HookMenu
     /** @var string */
     private $schemaUri;
 
-    public function __construct($parser, JsonSchemaValidator $validator)
+    /** @var DrupalModuleAPI */
+    private $moduleAPI;
+
+    public function __construct($parser, JsonSchemaValidator $validator, $moduleAPI)
     {
         $this->yamlParser = $parser;
         $this->valiator = $validator;
+        $this->moduleAPI = $moduleAPI;
         $this->schemaUri = AT_ROOT . '/misc/schema/routing.json';
     }
 
@@ -27,7 +32,7 @@ class HookMenu
     {
         $items = [];
         foreach (at_modules('at') as $module) {
-            $file = DRUPAL_ROOT . '/' . drupal_get_path('module', $module) . '/' . $module . '.routing.yml';
+            $file = DRUPAL_ROOT . '/' . $this->moduleAPI->getPath('module', $module) . '/' . $module . '.routing.yml';
             if (file_exists($file)) {
                 $routes = $this->yamlParser->parse(file_get_contents($file));
                 $items += $this->getMenuItems($module, $routes);

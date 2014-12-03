@@ -13,7 +13,8 @@ class Implementations
         if (NULL === $this->hookMenu) {
             $parser = at()->get('yaml.parser');
             $validator = at()->get('json_schema.validator');
-            $this->hookMenu = new HookMenu($parser, $validator);
+            $moduleAPI = at()->getModuleAPI();
+            $this->hookMenu = new HookMenu($parser, $validator, $moduleAPI);
         }
         return $this->hookMenu;
     }
