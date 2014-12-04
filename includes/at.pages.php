@@ -23,7 +23,7 @@ function at_page_access_callback($route_name)
 function at_page_callback($route_name)
 {
     if ($route = at_route_load($route_name)) {
-        return entity_views_plugin_row_entity_view('at_route', [$route], 'full', NULL, TRUE);
+        return entity_view('at_route', [$route], 'full', NULL, TRUE);
     }
     throw new RouteNotFoundException();
 }
