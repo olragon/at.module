@@ -28,4 +28,10 @@ class Route extends Entity
     /** @var string */
     public $module;
 
+    public function render($view_mode = 'full', $langcode = NULL)
+    {
+        list($class_name, $method) = explode('::', $this->data['defaults']['_controller']);
+        return (new $class_name)->{$method}();
+    }
+
 }

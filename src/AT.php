@@ -24,6 +24,11 @@ class AT
     /** @var DrupalModuleAPI */
     private $moduleAPI;
 
+    public function isContainerCreatable()
+    {
+        return class_exists('Symfony\Component\DependencyInjection\Container');
+    }
+
     /**
      * @param string $baseModule
      * @param string $configFile

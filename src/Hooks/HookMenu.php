@@ -12,7 +12,7 @@ class HookMenu
     private $yamlParser;
 
     /** @var JsonSchemaValidator */
-    private $valiator;
+    private $validator;
 
     /** @var string */
     private $schemaUri;
@@ -23,9 +23,9 @@ class HookMenu
     public function __construct($parser, JsonSchemaValidator $validator, $moduleAPI)
     {
         $this->yamlParser = $parser;
-        $this->valiator = $validator;
+        $this->validator = $validator;
         $this->moduleAPI = $moduleAPI;
-        $this->schemaUri = AT_ROOT . '/misc/schema/routing.json';
+        $this->schemaUri = AT_ROOT . '/misc/schema/routing_item.json';
     }
 
     public function execute()
@@ -45,7 +45,8 @@ class HookMenu
     {
         $items = [];
         foreach ($routes as $name => $input) {
-            if ($this->valiator->validate($input, $this->schemaUri)) {
+            $route = json_decode(json_encode($input, TRUE));
+            if ($this->validator->validate($route, $this->schemaUri)) {
                 $path = trim($input['path'], '/');
                 $items[$path] = $this->convertRoutingItemToDrupal7Style($module, $name, $input);
             }
@@ -66,13 +67,17 @@ class HookMenu
         ];
 
         if ($route = entity_load('at_route', FALSE, ['name' => $name])) {
+            $route = reset($route);
+        }
+        else {
             $route = entity_create('at_route', [
-                'type' => isset($input['bundle']) ? $input['bundle'] : 'route',
-                'name' => $name,
+                'bundle' => isset($input['bundle']) ? $input['bundle'] : 'route',
+                'name'   => $name,
             ]);
         }
 
         $route->data = ['module' => $module] + $input;
+        $route->save();
 
         return $menu_item;
     }

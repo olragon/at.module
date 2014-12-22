@@ -9,7 +9,7 @@ class SystemDemoController
     {
         return [
             '#prefix' => '<div id="system-demo" class="system-demo">',
-            '#markup' => 'System demo',
+            '#markup' => 'System demo body.',
             '#suffix' => '</div>',
         ];
     }

@@ -1,5 +1,9 @@
 <?php
 
+use Drupal\at\Entity\Route;
+use Drupal\at\Entity\RouteType;
+use Drupal\at\Exceptions\RouteNotFoundException;
+
 define('AT_CLASS', 'Drupal\at\AT');
 define('AT_ROOT', __DIR__);
 
@@ -38,4 +42,47 @@ function at_route_load($name)
 {
     $routes = entity_load_multiple_by_name('at_route', [$name]);
     return isset($routes[$name]) ? $routes[$name] : null;
+}
+
+/**
+ * Access callback for all routes.
+ * @param string $route_name
+ * @return bool
+ */
+function at_page_access_callback($route_name)
+{
+    if ($route = at_route_load($route_name)) {
+        return entity_access('view', 'at_route', $route);
+    }
+    throw new RouteNotFoundException();
+}
+
+/**
+ * Access callback for route entity.
+ * @param string $op
+ * @param Route $route
+ * @return bool
+ */
+function at_route_access_callback($op, $route = NULL)
+{
+    switch ($op) {
+        case 'view':
+            if (NULL !== $route) {
+                return user_access($route->data['requirements']['_permission']);
+            }
+            return FALSE;
+        default:
+            return FALSE;
+    }
+}
+
+/**
+ * Access callback for route_type entity.
+ * @param string $op
+ * @param RouteType $route_type
+ * @return boolean
+ */
+function at_route_type_access_callback($op, $route_type = NULL)
+{
+    return TRUE; // user_access('manage at route types');
 }

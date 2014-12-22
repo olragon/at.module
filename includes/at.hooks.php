@@ -31,7 +31,9 @@ function at_at_container_extension_info()
  */
 function at_menu()
 {
-    return at()->getHookImplementations()->getHookMenu()->execute();
+    if (at()->isContainerCreatable()) {
+        return at()->getHookImplementations()->getHookMenu()->execute();
+    }
 }
 
 /**
@@ -62,36 +64,37 @@ function at_entity_info()
     ];
 
     $info['at_route'] = [
-        'label'            => 'Route item',
-        'description'      => 'Store structure of route items',
-        'entity class'     => 'Drupal\at\Entity\Route',
-        'controller class' => 'Drupal\at\Entity\RouteController',
-        'base table'       => 'at_route',
-        'fieldable'        => TRUE,
-        'exportable'       => TRUE,
-        'entity keys'      => array('id' => 'id', 'bundle' => 'bundle', 'name' => 'name', 'label' => 'title'),
-        'bundle keys'      => array('bundle' => 'bundle'),
-        'access callback'  => 'at_route_access_callback',
-        'module'           => 'at',
-        'admin ui'         => [
+        'label'                         => 'Route item',
+        'description'                   => 'Store structure of route items',
+        'entity class'                  => 'Drupal\at\Entity\Route',
+        'controller class'              => 'Drupal\at\Entity\RouteController',
+        'extra fields controller class' => 'Drupal\at\Entity\RouteExtraFieldsController',
+        'base table'                    => 'at_route',
+        'fieldable'                     => TRUE,
+        'exportable'                    => TRUE,
+        'entity keys'                   => array('id' => 'id', 'bundle' => 'bundle', 'name' => 'name', 'label' => 'title'),
+        'bundle keys'                   => array('bundle' => 'bundle'),
+        'access callback'               => 'at_route_access_callback',
+        'module'                        => 'at',
+        'bundles'                       => [],
+        'admin ui'                      => [
             'path'             => 'admin/structure/at-routes',
             'file'             => 'includes/at.pages.php',
             'controller class' => 'Drupal\at\Entity\RouteUIController',
         ],
-        'bundles'          => [],
     ];
 
     // Add bundle info but bypass entity_load() as we cannot use it here.
     foreach (db_select('at_route_type', 'route_type')->fields('route_type')->execute()->fetchAllAssoc('type') as $name => $route_type) {
-        $info['at_route']['bundles'][$name] = array(
+        $info['at_route']['bundles'][$name] = [
             'label' => $route_type->label,
-            'admin' => array(
+            'admin' => [
                 'path'             => 'admin/structure/route-types/manage/%at_route_type',
                 'real path'        => 'admin/structure/route-types/manage/' . $name,
                 'bundle argument'  => 4,
                 'access arguments' => array('administer route types'),
-            ),
-        );
+            ],
+        ];
     }
 
     return $info;

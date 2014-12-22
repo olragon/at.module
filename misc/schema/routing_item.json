@@ -1,0 +1,22 @@
+{
+    "title": "Routing item",
+    "type": "object",
+    "properties": {
+        "path": {
+            "type": "string"
+        },
+        "defaults": {
+            "type": "object",
+            "properties": {
+                "_title": {},
+                "_controller": {}
+            }
+        },
+        "requirements": {
+            "_permission": {
+                "type": "string"
+            }
+        }
+    },
+    "required": ["path"]
+}
