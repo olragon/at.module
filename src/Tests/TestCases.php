@@ -6,6 +6,13 @@ use Drupal\at_base\Tests\DrupalCacheAPI;
 use DrupalWebTestCase;
 use ReflectionObject;
 
+/**
+ * Drupal take a lot of time to setup environment for each test case. It maybe
+ * good for most of cases, but the at.module just provides API functionalities.
+ * We don't want Drupal rebuild everything. So this class only has one testing
+ * method —  ::testWrapper(), it will find methods from traits, which start with
+ * 'check…' and consider them as test cases.
+ */
 class TestCases extends DrupalWebTestCase
 {
 
