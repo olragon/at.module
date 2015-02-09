@@ -18,38 +18,3 @@ function at($class_name = 'Drupal\at\AT')
     }
     return $obj;
 }
-
-/**
- * Update service container
- */
-function at_update_service_container() {
-    drupal_static_reset();
-    $at_container_file = variable_get('file_private_path', '') . '/at.container.php';
-    if (file_exists($at_container_file)) {
-        drupal_unlink($at_container_file);
-    }
-}
-
-/**
- * Implements hook_flush_caches().
- */
-function at_flush_caches()
-{
-    at_update_service_container();
-}
-
-/**
- * Implements hook_modules_enabled().
- */
-function at_modules_enabled()
-{
-    at_update_service_container();
-}
-
-/**
- * Implements hook_modules_disabled().
- */
-function at_modules_disabled()
-{
-    at_update_service_container();
-}

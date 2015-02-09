@@ -31,11 +31,23 @@ class AT
     }
 
     /**
+     * Flush service container. Force rebuild.
+     */
+    public function flushContainer()
+    {
+        drupal_static_reset('at_container');
+        $fileName = variable_get('file_private_path', '') . '/at.container.php';
+        if (file_exists($fileName)) {
+            drupal_unlink($fileName);
+        }
+    }
+
+    /**
      * @return AT_Container
      */
     public function getContainer()
     {
-        if (!$container = &drupal_static(__FUNCTION__)) {
+        if (!$container = &drupal_static('at_container')) {
             $fileName = variable_get('file_private_path', '') . '/at.container.php';
             if (file_exists($fileName)) {
                 require_once $fileName;
