@@ -1,0 +1,3 @@
+services:
+    'at_test':
+        class: 'Drupal\at_test\ATTest'

@@ -27,7 +27,8 @@ class TestCases extends DrupalWebTestCase
 
     public function setUp()
     {
-        parent::setUp('at');
+        $modules = array('at', 'at_test');
+        parent::setUp($modules);
         at()->setDrupalCacheAPI(new DrupalCacheAPI());
     }
 
