@@ -51,7 +51,7 @@ class ModuleFetcher
         }
 
         // Config file is available
-        $file = DRUPAL_ROOT . '/' . drupal_get_path('module', $name) . '/config/' . $this->configFile . '.yml';
+        $file = DRUPAL_ROOT . '/' . drupal_get_path('module', $name) . '/' . $name . '.' . $this->configFile . '.yml';
 
         return is_file($file);
     }
