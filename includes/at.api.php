@@ -47,7 +47,7 @@ function at_modules($baseModule = 'at_base', $configFile = '', $modules = [])
     }
 
     return $cache[$baseModule][$configFile] = at()
-        ->getModuleFetcher($configFile, $baseModule)
+        ->getModuleFetcher($baseModule, $configFile)
         ->fetch(system_list('module_enabled'));
 }
 
