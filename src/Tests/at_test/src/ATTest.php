@@ -2,6 +2,12 @@
 
 namespace Drupal\at_test;
 
-class ATTest {
+class ATTest
+{
+
+    public function hello()
+    {
+        return 'Hello!';
+    }
 
 }

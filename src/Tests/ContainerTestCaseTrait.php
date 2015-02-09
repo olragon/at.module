@@ -2,6 +2,7 @@
 
 namespace Drupal\at\Tests;
 
+use Drupal\at_test\ATTest;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 trait ContainerTestCaseTrait
@@ -16,16 +17,22 @@ trait ContainerTestCaseTrait
         // Get expression language service
         $expLang = $container->get('expression_language');
         $this->assertEqual('Symfony\Component\ExpressionLanguage\ExpressionLanguage', get_class($expLang));
+    }
 
-        // Test module enable / disable
-        $test_service = at()->get('at_test');
-        $this->assertEqual('Drupal\at_test\ATTest', get_class($test_service), 'Listen to cache flush call/module enable event to update service container.');
+    public function checkServiceContainerWhenModuleOnOff()
+    {
+        // Case: Enable module
+        $this->assertEqual(at()->get('at_test') instanceof ATTest, 'Enable module, new service should be detected.');
 
+        // Case: Disable module
+        $msg = 'Module disabled, the related service should be no longer part of service container.';
         module_disable(array('at_test'));
         try {
-            $test_service = at()->get('at_test');
-        } catch (Exception $e) {
-            $this->assertEqual('Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException', $e, 'Listen to disable disable module event to update service container.');
+            at()->get('at_test');
+            $this->assertTrue(FALSE, $msg);
+        }
+        catch (Exception $e) {
+            $this->assertTrue($e instanceof ServiceNotFoundException, $msg);
         }
     }
 
@@ -41,4 +48,5 @@ trait ContainerTestCaseTrait
         $dumper = at()->get('yaml.dumper');
         $this->assertEqual('[1, 2, 3]', $dumper->dump([1, 2, 3]));
     }
+
 }

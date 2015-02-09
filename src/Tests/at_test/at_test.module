@@ -1,17 +1,7 @@
 <?php
 
-function at_test_menu() {
-  $items['attest'] = array(
-    'page callback' => 'at_test_page',
-    'type' => MENU_CALLBACK,
-    'access callback' => TRUE
-  );
-  return $items;
-}
-
-function at_test_page() {
-//  $modules = at_modules('at', 'services');
-//  dpm($modules, '$modules');
-  $container = at()->get('at_test');
-  return 'at_test';
-}
+/**
+ * @file at_test.module
+ *
+ * Helper module for testing.
+ */
