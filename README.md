@@ -27,9 +27,12 @@ To use this module for your module, edit MODULE.info file, add this line:
 dependencies[] = at
 ```
 
+Documentation for each functionality of provided under ./docs.
+
 ## Features
 
 1. Service container
 2. Yaml parser & dumper
 3. Bridge for Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)
 4. JSON Schema validator
+5. Bridge for Symfony Event dispatcher component.
