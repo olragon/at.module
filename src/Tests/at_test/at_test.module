@@ -15,5 +15,5 @@ use \Symfony\Components\EventDispatcher\EventDispatcher;
  */
 function at_test_at_init_dispatcher($dispatcher)
 {
-    variable_set('at_test_at_init_dispatcher', microtime());
+    variable_set('at_test_at_init_dispatcher', 'Drupal Drupal Drupal');
 }

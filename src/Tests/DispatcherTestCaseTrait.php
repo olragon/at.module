@@ -26,10 +26,11 @@ trait DispatcherTestCaseTrait
      */
     public function checkFactoryIsCalledWhenCreateDispatcher()
     {
-        variable_set('at_test_at_init_dispatcher', FALSE);
         at()->getDispatcher();
-        $result = variable_get('at_test_at_init_dispatcher');
-        $this->assertTRUE($result, 'When dispatcher was created, factory is called and hook_at_init_dispatcher is fired');
+
+        $expecting = 'Drupal Drupal Drupal';
+        $actual = variable_get('at_test_at_init_dispatcher');
+        $this->assertEqual($expecting, $actual, 'When dispatcher was created, factory is called and hook_at_init_dispatcher is fired');
     }
 
     /**
