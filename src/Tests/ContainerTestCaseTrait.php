@@ -3,7 +3,6 @@
 namespace Drupal\at\Tests;
 
 use Drupal\at_test\ATTest;
-use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 trait ContainerTestCaseTrait
 {
@@ -21,27 +20,21 @@ trait ContainerTestCaseTrait
 
     /**
      * Make sure the service containers is updated when modules are enabled/disabled.
-     *
-     * @TODO: This test case should be fixed.
      */
     public function checkServiceContainerWhenModuleOnOff()
     {
-        /*
         // Case: Enable module
         $this->assertEqual(at()->get('at_test') instanceof ATTest, 'Enable module, new service should be detected.');
 
         // Case: Disable module
-        $msg = 'Module disabled, the related service should be no longer part of service container.';
         module_disable(array('at_test'));
-        try {
-            at()->get('at_test');
-            $this->assertTrue(FALSE, $msg);
-        }
-        catch (Exception $e) {
-            $this->assertTrue($e instanceof ServiceNotFoundException, $msg);
-        }
+        $msg = 'Module disabled, the related service should be no longer part of service container.';
+        $this->doEval("try { at()->get('at_test'); } catch (Exception \$e) { echo 'at_test Service not found'; }");
+        $this->assertText('at_test Service not found', $msg);
+
+        // Reset default module state, at_test module is still needed for other
+        // test cases.
         module_enable(array('at_test'));
-         */
     }
 
     public function checkYamlServices()

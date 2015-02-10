@@ -6,6 +6,8 @@ use Drupal\at_base\Tests\DrupalCacheAPI;
 use DrupalWebTestCase;
 use ReflectionObject;
 
+define('AT_TEST_ROOT', __DIR__);
+
 /**
  * Drupal take a lot of time to setup environment for each test case. It maybe
  * good for most of cases, but the at.module just provides API functionalities.
@@ -17,6 +19,9 @@ class TestCases extends DrupalWebTestCase
 {
 
     protected $profile = 'testing';
+
+    /** Account for execute /devel/php */
+    private $userDevel;
 
     use \Drupal\at\Tests\CacheTestCaseTrait,
         \Drupal\at\Tests\ContainerTestCaseTrait,
@@ -35,7 +40,7 @@ class TestCases extends DrupalWebTestCase
 
     public function setUp()
     {
-        $modules = array('at', 'at_test');
+        $modules = array('at', 'at_test', 'devel');
         parent::setUp($modules);
         at()->setDrupalCacheAPI(new DrupalCacheAPI());
     }
@@ -51,6 +56,15 @@ class TestCases extends DrupalWebTestCase
                 }
             }
         }
+    }
+
+    public function doEval($code)
+    {
+        if (NULL === $this->userDevel) {
+            $this->userDevel = $this->drupalCreateUser(['execute php code']);
+            $this->drupalLogin($this->userDevel);
+        }
+        $this->drupalPost('devel/php', ['code' => $code], t('Execute'));
     }
 
 }
