@@ -15,6 +15,15 @@ services:
         class: 'Drupal\at\JsonSchemaValidator'
         arguments: ['@json_schema.uri_retriever', '@json_schema.ref_resolver']
 
+    # Event dispatcher
+    'dispatcher.factory':
+        class: 'Drupal\at\AT'
+    'dispatcher':
+        class: 'Symfony\Component\EventDispatcher\EventDispatcher'
+        factory: ["@dispatcher.factory", createDispatcher]
+    'dispatcher.event':
+        class: 'Symfony\Component\EventDispatcher\Event'
+
     # Yaml parser & dumper
     'yaml.parser':
         class: 'Symfony\Component\Yaml\Parser'

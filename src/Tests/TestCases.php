@@ -21,7 +21,8 @@ class TestCases extends DrupalWebTestCase
     use \Drupal\at\Tests\CacheTestCaseTrait,
         \Drupal\at\Tests\ContainerTestCaseTrait,
         \Drupal\at\Tests\JsonSchemaTestCaseTrait,
-        \Drupal\at\Tests\KeyValueStorageTestCaseTrait;
+        \Drupal\at\Tests\KeyValueStorageTestCaseTrait,
+        \Drupal\at\Tests\DispatcherTestCaseTrait;
 
     public static function getInfo()
     {

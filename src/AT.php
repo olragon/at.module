@@ -7,6 +7,7 @@ use Drupal\at\Container\Creator;
 use Drupal\at\Drupal\DrupalCacheAPI;
 use Drupal\at\Hooks\Implementations;
 use Drupal\at\ModuleFetcher;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class AT
 {
@@ -129,6 +130,28 @@ class AT
             AnnotationRegistry::registerFile($base_dir . '/lib/Doctrine/KeyValueStore/Mapping/Annotations/Transient.php');
         }
         return at()->getContainer()->get('kvs.em.' . $name);
+    }
+
+    /**
+     * Get Event Dispatcher
+     *
+     * @return EventDispatcher
+     */
+    public function getDispatcher()
+    {
+        return $this->get('dispatcher');
+    }
+
+    /**
+     * Create Event Dispatcher
+     *
+     * @return EventDispatcher
+     */
+    public static function createDispatcher()
+    {
+        $dispatcher = new EventDispatcher();
+        module_invoke_all('at_init_dispatcher', $dispatcher);
+        return $dispatcher;
     }
 
 }
