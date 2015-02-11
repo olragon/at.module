@@ -154,4 +154,11 @@ class AT
         return $dispatcher;
     }
 
+    /**
+     * @return \Drupal\at\WatchDog
+     */
+    public function watchdog()
+    {
+        return $this->get('watchdog');
+    }
 }

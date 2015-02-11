@@ -37,3 +37,4 @@ Documentation for each functionality of provided under ./docs.
 4. JSON Schema validator
 5. Bridge for Symfony Event dispatcher component.
 6. VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)
+7. Watchdog
