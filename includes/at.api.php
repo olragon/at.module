@@ -27,11 +27,11 @@ function at_newv($class_name, $argv = array())
 }
 
 /**
- * Get modules that depends on a specific module.
+ * Get modules which depends on a specific module.
  *
  * @param string $baseModule
  * @param string $configFile
- * @return array
+ * @return string[]
  * @see system_list()
  */
 function at_modules($baseModule = 'at_base', $configFile = '', $modules = [])
