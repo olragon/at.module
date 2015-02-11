@@ -11,7 +11,7 @@ use \Symfony\Components\EventDispatcher\EventDispatcher;
 /**
  * Implements hook_at_init_dispatcher().
  *
- * @param \Symfony\Components\EventDispatcher\EventDispatcher $dispatcher
+ * @param EventDispatcher $dispatcher
  */
 function at_test_at_init_dispatcher($dispatcher)
 {
@@ -27,6 +27,6 @@ function at_test_watchdog(array $log_entry)
 
     variable_set('at_test_watchdog', array(
         'message' => $log_entry['message'],
-        'level' => $levels[$log_entry['severity']]
+        'level'   => $levels[$log_entry['severity']]
     ));
 }
