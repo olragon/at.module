@@ -3,6 +3,8 @@
 namespace Drupal\at;
 
 /**
+ * Get modules that depends on a specific module.
+ *
  * @see at_modules()
  */
 class ModuleFetcher
