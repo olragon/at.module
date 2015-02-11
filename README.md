@@ -27,14 +27,14 @@ To use this module for your module, edit MODULE.info file, add this line:
 dependencies[] = at
 ```
 
-Documentation for each functionality of provided under ./docs.
+Documentation for each functionality is provided under `./docs` directory.
 
 ## Features
 
 1. Bridge for **Symfony Dependency Injection** component.
-2. Bridge for **Symfony YAML** component
-3. Bridge for **Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)**
+2. Bridge for **Symfony YAML** component.
+3. Bridge for **Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)**.
 4. Bridge for **JSON Schema validator**.
 5. Bridge for **Symfony Event Dispatcher** component.
-6. Including **VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)**
-7. Provide Watchdog **PSR-3 Logger**
+6. Including **VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)**.
+7. Provide Watchdog **PSR-3 Logger**.
