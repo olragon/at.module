@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\at\Tests;
+namespace Drupal\at\Tests\Traits;
 
-use Doctrine\KeyValueStore\Mapping\Annotations as KeyValue;
+use Drupal\at_test\KeyValueStorage\RoutingItemFixture;
 
 trait KeyValueStorageTestCaseTrait
 {
@@ -23,32 +23,9 @@ trait KeyValueStorageTestCaseTrait
         $em->flush();
 
         // Read
-        $created_item = $em->find('Drupal\at\Tests\RoutingItemFixture', ['name' => 'demo']);
+        $created_item = $em->find('Drupal\at_test\KeyValueStorage\RoutingItemFixture', ['name' => 'demo']);
         $this->assertTrue($created_item instanceof RoutingItemFixture);
         $this->assertEqual('Demo route item', $created_item->getTitle());
-    }
-
-}
-
-/**
- * @KeyValue\Entity(storageName="demo_routing_item")
- */
-class RoutingItemFixture
-{
-
-    /** @KeyValue\Id */
-    private $name;
-    private $title;
-
-    public function __construct($name, $title)
-    {
-        $this->name = $name;
-        $this->title = $title;
-    }
-
-    public function getTitle()
-    {
-        return $this->title;
     }
 
 }

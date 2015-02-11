@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\at\Tests;
+namespace Drupal\at\Tests\Traits;
 
 trait CacheTestCaseTrait
 {

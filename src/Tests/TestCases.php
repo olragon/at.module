@@ -20,21 +20,21 @@ class TestCases extends DrupalWebTestCase
 
     protected $profile = 'testing';
 
-    /** Account for execute /devel/php */
+    /** Account for executing /devel/php */
     private $userDevel;
 
-    use \Drupal\at\Tests\CacheTestCaseTrait,
-        \Drupal\at\Tests\ContainerTestCaseTrait,
-        \Drupal\at\Tests\JsonSchemaTestCaseTrait,
-        \Drupal\at\Tests\KeyValueStorageTestCaseTrait,
-        \Drupal\at\Tests\DispatcherTestCaseTrait,
-        \Drupal\at\Tests\WatchdogTestCaseTrait;
+    use \Drupal\at\Tests\Traits\CacheTestCaseTrait,
+        \Drupal\at\Tests\Traits\ContainerTestCaseTrait,
+        \Drupal\at\Tests\Traits\DispatcherTestCaseTrait,
+        \Drupal\at\Tests\Traits\JsonSchemaTestCaseTrait,
+        \Drupal\at\Tests\Traits\KeyValueStorageTestCaseTrait,
+        \Drupal\at\Tests\Traits\WatchdogTestCaseTrait;
 
     public static function getInfo()
     {
         return array(
-            'name'        => 'AT Test cases',
-            'description' => '…',
+            'name'        => '@module',
+            'description' => 'Test cases for @module',
             'group'       => 'AT'
         );
     }
