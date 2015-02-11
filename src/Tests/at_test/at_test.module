@@ -11,9 +11,22 @@ use \Symfony\Components\EventDispatcher\EventDispatcher;
 /**
  * Implements hook_at_init_dispatcher().
  *
- * @param EventDispatcher $dispatcher
+ * @param \Symfony\Components\EventDispatcher\EventDispatcher $dispatcher
  */
 function at_test_at_init_dispatcher($dispatcher)
 {
     variable_set('at_test_at_init_dispatcher', 'Drupal Drupal Drupal');
+}
+
+/**
+ * Implements hook_watchdog().
+ */
+function at_test_watchdog(array $log_entry)
+{
+    $levels = watchdog_severity_levels();
+
+    variable_set('at_test_watchdog', array(
+        'message' => $log_entry['message'],
+        'level' => $levels[$log_entry['severity']]
+    ));
 }

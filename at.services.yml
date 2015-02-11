@@ -56,3 +56,7 @@ services:
     'kvs.em.default':
         class: 'Doctrine\KeyValueStore\EntityManager'
         arguments: ['@kvs.storage.dbal', '@kvs.config.default']
+
+    # Watchdog
+    'watchdog':
+        class: 'Drupal\at\Watchdog'

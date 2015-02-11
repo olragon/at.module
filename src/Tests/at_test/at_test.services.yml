@@ -1,3 +1,6 @@
 services:
     'at_test':
         class: 'Drupal\at_test\ATTest'
+    'at_test.service_with_logger':
+        class: 'Drupal\at_test\ServiceWithLogger'
+        arguments: ['@watchdog']
