@@ -31,10 +31,10 @@ Documentation for each functionality of provided under ./docs.
 
 ## Features
 
-1. Service container
-2. Yaml parser & dumper
-3. Bridge for Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)
-4. JSON Schema validator
-5. Bridge for Symfony Event dispatcher component.
-6. VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)
-7. Watchdog
+1. Bridge for **Symfony Dependency Injection** component.
+2. Bridge for **Symfony YAML** component
+3. Bridge for **Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)**
+4. Bridge for **JSON Schema validator**.
+5. Bridge for **Symfony Event Dispatcher** component.
+6. Including **VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)**
+7. Provide Watchdog **PSR-3 Logger**
