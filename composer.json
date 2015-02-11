@@ -23,6 +23,7 @@
         "symfony/expression-language": "~2.6.0",
         "symfony/filesystem": "~2.6.0",
         "symfony/yaml": "~2.6.0",
-        "symfony/event-dispatcher": "~2.6.0"
+        "symfony/event-dispatcher": "~2.6.0",
+        "symfony/var-dumper": "~2.6.0"
     }
 }

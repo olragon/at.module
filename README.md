@@ -36,3 +36,4 @@ Documentation for each functionality of provided under ./docs.
 3. Bridge for Doctrine [Key-value storage](https://github.com/doctrine/KeyValueStore)
 4. JSON Schema validator
 5. Bridge for Symfony Event dispatcher component.
+6. VarDumper [VarDumper Component](http://symfony.com/doc/current/components/var_dumper/index.html)
