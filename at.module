@@ -11,10 +11,10 @@ at_define('AT_ROOT', __DIR__);
  *
  * @return \Drupal\at\AT
  */
-function at($class_name = 'Drupal\at\AT')
+function at($atClass = AT_CLASS)
 {
     if (!$obj = &drupal_static(__FUNCTION__)) {
-        $obj = new $class_name;
+        $obj = new $atClass;
     }
     return $obj;
 }
