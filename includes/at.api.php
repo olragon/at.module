@@ -1,6 +1,18 @@
 <?php
 
 /**
+ * Simple wrapper for default define() function.
+ *
+ * @param string $constant The name of the constant.
+ * @param mixed $value The value of the constant
+ * @return void
+ */
+function at_define($constant, $value)
+{
+    (!defined($constant)) && define($constant, $value);
+}
+
+/**
  * Invokes the "new" operator with a vector of arguments. There is no way to
  * call_user_func_array() on a class constructor, so you can instead use this
  * function:

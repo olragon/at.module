@@ -1,10 +1,10 @@
 <?php
 
-at_define('AT_CLASS', 'Drupal\at\AT');
-at_define('AT_ROOT', __DIR__);
-
 require_once __DIR__ . '/includes/at.api.php';
 require_once __DIR__ . '/includes/at.hooks.php';
+
+at_define('AT_CLASS', 'Drupal\at\AT');
+at_define('AT_ROOT', __DIR__);
 
 /**
  * Wrapper to helper classes.
@@ -17,18 +17,4 @@ function at($class_name = 'Drupal\at\AT')
         $obj = new $class_name;
     }
     return $obj;
-}
-
-/**
- * Simple wrapper for default define() function.
- *
- * @param string $constant
- *   The name of the constant.
- * @param mixed $value
- *   The value of the constant
- * @return void
- */
-function at_define($constant, $value)
-{
-    (!defined($constant)) && define($constant, $value);
 }
